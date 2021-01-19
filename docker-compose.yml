@@ -1,0 +1,50 @@
+version: '3'
+
+services:
+
+  proxy:
+    container_name: quibana-proxy
+    build: proxy
+    links:
+      - client:client
+      - server:server
+      - mongodb:mongodb
+    ports:
+      - "80:80"
+    depends_on:
+      - client
+      - server
+      - mongodb
+
+  client:
+    container_name: quibana-client
+    build: client
+    ports:
+      - "8080:8080"
+    environment:
+      - PORT=8080
+
+  mongodb:
+    container_name: quibana-database
+    image: mongo:3.2.6
+    ports:
+      - 27018:27017
+
+  # import-database:
+  #   container_name: quibana-database-importer
+  #   image: mongo:3.2.6
+  #   links:
+  #     - mongodb
+  #   volumes:
+  #     - ./mongodb:/mongodb
+  #   command:
+  #     /mongodb/import.sh
+
+  server:
+    container_name: quibana-server
+    build: server
+    ports:
+      - "3000:3000"
+    environment:
+      - API_HOST=localhost
+      - API_PORT=3000
