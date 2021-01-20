@@ -11,9 +11,24 @@ services:
       - mongodb:mongodb
     ports:
       - "80:80"
+    networks:
+      - quibana-network
     depends_on:
-      - client
       - server
+      - client
+      - mongodb
+
+  server:
+    container_name: quibana-server
+    build: server
+    ports:
+      - "3000:3000"
+    environment:
+      - API_HOST=localhost
+      - API_PORT=3000
+    networks:
+      - quibana-network
+    depends_on:
       - mongodb
 
   client:
@@ -23,12 +38,18 @@ services:
       - "8080:8080"
     environment:
       - PORT=8080
+    networks:
+      - quibana-network
+    depends_on:
+      - server
 
   mongodb:
     container_name: quibana-database
     image: mongo:3.2.6
     ports:
       - 27018:27017
+    networks:
+      - quibana-network
 
   # import-database:
   #   container_name: quibana-database-importer
@@ -39,12 +60,3 @@ services:
   #     - ./mongodb:/mongodb
   #   command:
   #     /mongodb/import.sh
-
-  server:
-    container_name: quibana-server
-    build: server
-    ports:
-      - "3000:3000"
-    environment:
-      - API_HOST=localhost
-      - API_PORT=3000
