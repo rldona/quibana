@@ -1,4 +1,4 @@
-FROM node:12.9.0
+FROM node:12.9.1
 
 WORKDIR /var/node/server
 
