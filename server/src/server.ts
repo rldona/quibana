@@ -1,19 +1,15 @@
 import bodyParser from "body-parser";
 import express from "express";
 
-import connectDB from "../config/database";
+import connectDB from '../config/database';
 
 import movie from "./routes/api/movie";
 import tv from "./routes/api/tv";
 import search from "./routes/api/search";
 
-import mongo from '../config/mongo';
-
 const app = express();
 
 connectDB();
-
-console.log(mongo);
 
 app.set("port", process.env.PORT || 3000);
 

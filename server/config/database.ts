@@ -1,23 +1,13 @@
 import * as MongoClient from 'mongodb';
 
-const url = 'mongodb+srv://rldona:NTkXp5z9nPGkquv2@filmaffinity-db-cluster.qdjua.mongodb.net/filmaffinity-db?retryWrites=true&w=majority';
+import Mongo from '../config/mongo';
 
-const dbName = 'filmaffinity-db';
+const databaseUrl = 'mongodb+srv://rldona:NTkXp5z9nPGkquv2@filmaffinity-db-cluster.qdjua.mongodb.net/filmaffinity-db?retryWrites=true&w=majority';
+const databaseName = 'filmaffinity-db';
+const databaseCollection = 'reviews-es';
 
 const connectDB = async () => {
-  try {
-    MongoClient.connect(url, {
-      useUnifiedTopology: true
-    },(err: any, client: any) => {
-      console.log("Connected successfully to database");
-      const db = client.db(dbName);
-      client.close();
-    });
-  } catch (err) {
-    console.error(err.message);
-    process.exit(1);
-  }
-
+  Mongo.initialize(databaseUrl, databaseName, databaseCollection);
 };
 
 export default connectDB;
