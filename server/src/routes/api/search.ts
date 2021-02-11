@@ -10,7 +10,7 @@ router.get("/", async (req, res) => {
     const dbCollection = await Mongo.getCollection();
     const document = await dbCollection.findOne({ 'title' : 'Matrix' });
 
-    res.send('TODO: implement search text with index');
+    res.send(document);
 
   } catch (err) {
     console.error(err.message);
