@@ -8,8 +8,10 @@ const router: Router = Router();
 router.get("/", async (req, res) => {
   try {
     const dbCollection = await Mongo.getCollection();
-    const document = await dbCollection.findOne({ 'index' : 100000 });
-    res.json(document);
+    const document = await dbCollection.findOne({ 'title' : 'Matrix' });
+
+    res.send('TODO: implement search text with index');
+
   } catch (err) {
     console.error(err.message);
     res.status(HttpStatusCodes.INTERNAL_SERVER_ERROR).send("Server Error");

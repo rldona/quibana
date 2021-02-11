@@ -1,5 +1,3 @@
-import * as MongoClient from 'mongodb';
-
 import Mongo from '../config/mongo';
 
 const databaseUrl = 'mongodb+srv://rldona:NTkXp5z9nPGkquv2@filmaffinity-db-cluster.qdjua.mongodb.net/filmaffinity-db?retryWrites=true&w=majority';
