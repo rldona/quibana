@@ -1,5 +1,6 @@
 import { Router, Response } from "express";
 import HttpStatusCodes from "http-status-codes";
+import { textSpanIntersectsWith } from "typescript";
 
 import Mongo from '../../../config/mongo';
 
@@ -10,7 +11,27 @@ router.get("/", async (req, res) => {
     const dbCollection = await Mongo.getCollection();
     const document = await dbCollection.findOne({ 'title' : 'Matrix' });
 
-    res.send(document);
+    let searchList:Array<Object> = [];
+
+    const hola = dbCollection.aggregate([
+      {
+        $search: {
+          "text": {
+            "query": "matrix",
+            "path": "title"
+          }
+        }
+      },
+      {
+        $limit: 3
+      }
+    ]);
+
+    for await (let data of hola) {
+      searchList.push(data.title);
+    }
+
+    res.send(searchList);
 
   } catch (err) {
     console.error(err.message);
