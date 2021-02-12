@@ -8,6 +8,7 @@ const router: Router = Router();
 
 router.get("/", async (req, res) => {
   try {
+    const textSearch = req.query.title;
     const dbCollection = await Mongo.getCollection();
 
     let searchList:Array<Object> = [];
@@ -16,7 +17,7 @@ router.get("/", async (req, res) => {
       {
         $search: {
           "text": {
-            "query": "matrix",
+            "query": textSearch,
             "path": "title"
           }
         }
