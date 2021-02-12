@@ -22,9 +22,8 @@ router.get("/", async (req, res) => {
           }
         }
       },
-      {
-        $limit: 3
-      }
+      { $limit: 20 },
+      { $sort : { 'year' : 1 } },
     ]);
 
     for await (let data of hola) {
