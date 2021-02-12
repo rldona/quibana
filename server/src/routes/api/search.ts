@@ -9,7 +9,6 @@ const router: Router = Router();
 router.get("/", async (req, res) => {
   try {
     const dbCollection = await Mongo.getCollection();
-    const document = await dbCollection.findOne({ 'title' : 'Matrix' });
 
     let searchList:Array<Object> = [];
 
